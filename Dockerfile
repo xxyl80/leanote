@@ -33,7 +33,7 @@ RUN mkdir -p /app/leanote/data/public/upload \
 RUN touch /app/leanote/bin/startLeanote.sh \
     && mkdir /app/leanote/data/logs \
     && echo '#!/bin/bash' >> /app/leanote/bin/startLeanote.sh \
-    && echo 'nohup mongod --dbpath /app/mongodb/data >> /app/mongodb/mongodb.log 2>&1 &' >> /app/mongodb/runmongo.sh \
+    && echo 'nohup mongod --dbpath /app/mongodb/data >> /app/mongodb/mongodb.log 2>&1 &' >> >> /app/leanote/bin/startLeanote.sh \
     && echo 'while sleep 90;do' >> /app/leanote/bin/startLeanote.sh \
     && echo '   exit -1' >> /app/leanote/bin/startLeanote.sh \
     && echo 'done' >> /app/leanote/bin/startLeanote.sh \
@@ -41,8 +41,7 @@ RUN touch /app/leanote/bin/startLeanote.sh \
     && echo '   mongorestore -h localhost -d leanote --dir /app/leanote/mongodb_install_data/mongodb_backup/leanote_install_data/' >> /app/leanote/bin/startLeanote.sh \
     && echo '   touch /app/mongodb/init_done' >> /app/leanote/bin/startLeanote.sh \
     && echo 'fi' >> /app/leanote/bin/startLeanote.sh \
-    && echo "cd /app/leanote/bin/ \\" >> /app/leanote/bin/startLeanote.sh \
-    && echo "&& nohup ./run.sh >> /app/leanote/data/logs/leanote.log 2>&1 & \\" >> /app/leanote/bin/startLeanote.sh \
+    && echo "sh /app/leanote/bin/run.sh \\" >> /app/leanote/bin/startLeanote.sh \
     && chmod -R 755 /app/leanote/bin/
 RUN cat /app/leanote/bin/startLeanote.sh
 
@@ -50,4 +49,4 @@ VOLUME ["/app/leanote/data","/app/leanote/data/logs"]
 
 EXPOSE 9000
 
-CMD ["sh","/app/leanote/bin/run.sh"]
+CMD ["sh","/app/leanote/bin/startLeanote.sh"]
