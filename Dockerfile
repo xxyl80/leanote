@@ -3,7 +3,8 @@ FROM centos:6
 ARG LEANOTE_VERSION=2.6.1
 ARG LEANOTE_BINARY=https://jaist.dl.sourceforge.net/project/leanote-bin/2.6.1/leanote-linux-amd64-v2.6.1.bin.tar.gz
 
-RUN yum install -y curl
+RUN yum install -y curl \
+    && yum install -y initscripts
 RUN touch /etc/yum.repos.d/mongodb-3.6.repo \
     && echo "[mongodb-org-3.6]" >> /etc/yum.repos.d/mongodb-3.6.repo \
     && echo "name=MongoDB Repository" >> //etc/yum.repos.d/mongodb-3.6.repo \
